@@ -182,3 +182,82 @@
     border-right-color: var(--border);
   }
 }
+
+
+
+
+
+
+
+.spot-section {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+}
+
+.spot-header h2 {
+  color: #111827;
+}
+.spot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.spot-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.spot-header p {
+  margin: 6px 0 0;
+  color: #64748b;
+}
+
+.spot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+  gap: 12px;
+}
+
+.spot-card {
+  border: none;
+  border-radius: 14px;
+  min-height: 88px;
+  padding: 12px;
+  cursor: pointer;
+  color: white;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.spot-card:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+
+.spot-card.available {
+  background: #15803d;
+}
+
+.spot-card.taken {
+  background: #b42318;
+}
+
+.spot-number {
+  font-size: 0.95rem;
+}
+
+.spot-status {
+  font-size: 0.8rem;
+  opacity: 0.95;
+}
