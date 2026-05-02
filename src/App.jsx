@@ -2,9 +2,9 @@ import { useState } from "react";
 import Header from "./components/Header";
 import FilterPanel from "./components/FilterPanel";
 import LotList from "./components/LotList";
-import MapPlaceholder from "./components/MapPlaceholder";
 import SpotGrid from "./components/SpotGrid";
 import "./App.css";
+import ParkingMap from "./ParkingMap.jsx";
 
 const mockLots = [
   {
@@ -174,7 +174,7 @@ function App() {
             </section>
           )}
 
-          <MapPlaceholder selectedLot={selectedLot} spots={spots} />
+          <ParkingMap spots={spots} onSpotClick={handleSpotClick} />
 
           <SpotGrid
             spots={spots}
