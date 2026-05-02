@@ -1,50 +1,48 @@
 import { createClient } from "@supabase/supabase-js";
 
-export function initDatabase() {
-    return createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY);
-}
+const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY);
 
-export async function getLocationList(supabase) {
-    const { data, err } = await supabase.from("locations")
+export async function getLocationList() {
+    const { data, error } = await supabase.from("locations")
         .select("name, type, pos, spots(count)");
 
-    if (err) {
-        console.error(err);
+    if (error) {
+        console.error(error);
         return null;
     }
 
     return data;
 }
 
-export async function getLocationUsage(supabase, id) {
-    const { count, err } = await supabase.from("spots")
+export async function getLocationUsage(id) {
+    const { count, error } = await supabase.from("spots")
         .select("*", { count: 'exact', head: 'true' })
         .eq("location", id)
         .eq("filled", true);
 
-    if (err) {
-        console.error(err);
+    if (error) {
+        console.error(error);
         return null;
     }
 
     return count;
 }
 
-export async function getAllSpots(supabase) {
-    const { data, err } = await supabase.from("spots")
+export async function getAllSpots() {
+    const { data, error } = await supabase.from("spots")
         .select("id, filled, positioning");
 
-    if (err) {
-        console.error(err);
+    if (error) {
+        console.error(error);
         return null;
     }
 
     return data;
 }
 
-export async function getSpotData(supabase, id) {
-    const { spotData, spotErr } = await supabase.from("spots")
-        .select("location, filled, last_modified, spot_num")
+export async function getSpotData(id) {
+    const { data: spotData, error: spotErr } = await supabase.from("spots")
+        .select("id, location, filled, last_modified, spot_num")
         .eq("id", id)
         .single();
 
@@ -53,9 +51,11 @@ export async function getSpotData(supabase, id) {
         return null;
     }
 
-    const { locData, locErr } = await supabase.from("locations")
+    console.log(spotData);
+
+    const { data: locData, error: locErr } = await supabase.from("locations")
         .select("name, type")
-        .eq("id", locData.location)
+        .eq("id", spotData.location)
         .single();
 
     if (locErr) {
