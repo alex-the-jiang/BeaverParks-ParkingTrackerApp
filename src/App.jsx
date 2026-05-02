@@ -5,6 +5,7 @@ import LotList from "./components/LotList";
 import MapPlaceholder from "./components/MapPlaceholder";
 import SpotGrid from "./components/SpotGrid";
 import "./App.css";
+import ParkingMap from "./ParkingMap.jsx";
 
 const mockLots = [
   {
@@ -145,7 +146,7 @@ function App() {
             ← Back to lots
           </button>
 
-          <MapPlaceholder selectedLot={selectedLot} spots={spots} />
+          <ParkingMap spots={spots} onSpotClick={handleSpotClick} />
 
           <SpotGrid
             spots={spots}
