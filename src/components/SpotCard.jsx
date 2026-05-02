@@ -7,9 +7,7 @@ function SpotCard({ spot, onClick }) {
       onClick={() => onClick?.(spot)}
     >
       <span className="spot-number">Spot {spot.spot_num}</span>
-      <span className="spot-status">
-        {isFilled ? "Taken" : "Available"}
-      </span>
+      <span className="spot-status">{isFilled ? "Taken" : "Available"}</span>
     </button>
   );
 }
