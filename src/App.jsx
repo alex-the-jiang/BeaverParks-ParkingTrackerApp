@@ -107,12 +107,13 @@ const initialSpots = [
 function App() {
   const [locations, setLocations] = useState([]);
   const [selectedLot, setSelectedLot] = useState(null);
-  const [spots, setSpots] = useState(initialSpots);
+  const [spots, setSpots] = useState([]);
   const [typeFilter, setTypeFilter] = useState("all");
   const [locationFilter, setLocationFilter] = useState("all");
   const [capacityFilter, setCapacityFilter] = useState("all");
-  const [sortOption, setSortOption] = useState("most-open");
+  const [sortOption, setSortOption] = useState("highest-capacity");
   const [searchTerm, setSearchTerm] = useState("");
+  const [sections, setSections] = useState([]);
   const [showSpotGrid, setShowSpotGrid] = useState(false);
 
   useEffect(() => {
@@ -125,8 +126,30 @@ function App() {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      const spots = await Database.getAllSpots();
+      if (spots) {
+        setSpots(spots);
+      }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+        const sections = await Database.getAllSections();
+        if (sections) {
+        setSections(sections);
+        }
+    }
+    fetchData();
+  }, []);
+
   const filteredLots = (locations ?? [])
     .filter((lot) => {
+      const totalSpots = lot.size ?? 0;
+
       const matchesType = typeFilter === "all" || lot.type === typeFilter;
 
       const matchesSearch =
@@ -138,27 +161,18 @@ function App() {
 
       const matchesCapacity =
         capacityFilter === "all" ||
-        (capacityFilter === "small" && lot.capacity < 50) ||
-        (capacityFilter === "medium" &&
-          lot.capacity >= 50 &&
-          lot.capacity <= 150) ||
-        (capacityFilter === "large" && lot.capacity > 150);
+        (capacityFilter === "small" && totalSpots < 50) ||
+        (capacityFilter === "medium" && totalSpots >= 50 && totalSpots <= 150) ||
+        (capacityFilter === "large" && totalSpots > 150);
 
       return matchesType && matchesSearch && matchesLocation && matchesCapacity;
     })
     .sort((a, b) => {
-      if (sortOption === "most-open") {
-        return b.openSpots - a.openSpots;
-      }
-
-      if (sortOption === "least-full") {
-        const aPercentFull = (a.capacity - a.openSpots) / a.capacity;
-        const bPercentFull = (b.capacity - b.openSpots) / b.capacity;
-        return aPercentFull - bPercentFull;
-      }
+      const aSize = a.size ?? 0;
+      const bSize = b.size ?? 0;
 
       if (sortOption === "highest-capacity") {
-        return b.capacity - a.capacity;
+        return bSize - aSize;
       }
 
       if (sortOption === "az") {
@@ -172,7 +186,7 @@ function App() {
     setTypeFilter("all");
     setLocationFilter("all");
     setCapacityFilter("all");
-    setSortOption("most-open");
+    setSortOption("highest-capacity");
     setSearchTerm("");
   }
 
@@ -189,6 +203,11 @@ function App() {
       )
     );
   }
+
+  const selectedLotSections = sections
+    .filter(section => section.location === selectedLot?.id)
+    .map(section => section.id);
+  const selectedLotSpots = spots.filter(spot => selectedLotSections.includes(spot.section));
 
   return (
     <main className="app-shell">
@@ -250,7 +269,7 @@ function App() {
           )}
 
           <div className="detail-main-grid">
-            <LotSummaryPanel selectedLot={selectedLot} spots={spots} />
+            <LotSummaryPanel selectedLot={selectedLot} spots={selectedLotSpots} />
 
             <div className="map-panel">
               <ParkingMap 
@@ -270,7 +289,7 @@ function App() {
           )} */}
         </section>
       )}
-      <Footer/>
+      <Footer />
     </main>
   );
 }

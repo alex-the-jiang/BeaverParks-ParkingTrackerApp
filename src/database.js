@@ -23,11 +23,19 @@ export async function getLocationList() {
         }
 
         let size = 0;
+
         for (let j = 0; j < secData.length; j++) {
-            const { count } = await supabase.from("spots")
-                .select('*', { count: 'exact', head: true })
-                .eq("section", secData[i].id);
-            size += count;
+            const { count, error: spotCountErr } = await supabase
+                .from("spots")
+                .select("*", { count: "exact", head: true })
+                .eq("section", secData[j].id);
+
+            if (spotCountErr) {
+                console.error(spotCountErr);
+                return null;
+            }
+
+            size += count ?? 0;
         }
 
         totalData[i] = {
@@ -82,10 +90,11 @@ export async function getSectionUsage(id) {
     return count;
 }
 
-export async function getSectionData(section) {
-    const { data, error } = await supabase.from("spots")
-        .select("id, filled, last_modified, ada")
-        .eq("section", id)
+export async function getSectionData(sectionId) {
+    const { data, error } = await supabase
+        .from("spots")
+        .select("id, filled, last_modified, ada, position, section")
+        .eq("section", sectionId)
         .order("position", { ascending: true });
 
     if (error) {
@@ -94,4 +103,27 @@ export async function getSectionData(section) {
     }
 
     return data;
+}
+
+export async function getAllSpots() {
+    const { data, error } = await supabase.from("spots")
+        .select("id, filled, last_modified, ada, section, position")
+        .order("position", { ascending: true });
+
+    if (error) {
+        console.error(error);
+        return null;
+    }
+
+    return data;
+}
+
+export async function updateSpot(id, newStatus) {
+    const { error } = await supabase.from("spots")
+        .update({ filled: newStatus, last_modified: new Date().toISOString() })
+        .eq("id", id);
+
+    if (error) {
+        console.log(error);
+    }
 }
