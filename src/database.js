@@ -26,7 +26,8 @@ export async function getLocationList() {
         for (let j = 0; j < secData.length; j++) {
             const { count } = await supabase.from("spots")
                 .select('*', { count: 'exact', head: true })
-                .eq("section", secData[i].id);
+                .eq("section", secData[j].id);
+
             size += count;
         }
 
