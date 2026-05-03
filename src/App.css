@@ -517,3 +517,143 @@ select {
   font-size: 0.9rem;
   margin-top: 10px;
 }
+.detail-main-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+  align-items: stretch;
+}
+
+.map-panel {
+  background: #f8fafc;
+  border-radius: 18px;
+  padding: 18px;
+  color: #111827;
+}
+
+.map-panel .leaflet-container {
+  border-radius: 14px;
+}
+
+.lot-summary-panel {
+  background: #f8fafc;
+  color: #111827;
+  border-radius: 18px;
+  padding: 22px;
+  border: 1px solid #e5e7eb;
+}
+
+.lot-summary-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #f97316;
+  margin-bottom: 6px;
+}
+
+.lot-summary-panel h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 1.35rem;
+}
+
+.lot-summary-subtitle {
+  color: #64748b;
+  margin-top: 6px;
+}
+
+.status-pill {
+  border-radius: 999px;
+  padding: 7px 11px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.status-pill.plenty {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.status-pill.limited {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+.status-pill.full {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.summary-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.summary-stat {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: center;
+}
+
+.summary-stat strong {
+  font-size: 1.5rem;
+  color: #111827;
+}
+
+.summary-stat span {
+  color: #64748b;
+  font-size: 0.85rem;
+}
+
+.summary-progress {
+  margin-top: 22px;
+}
+
+.summary-progress-row {
+  display: flex;
+  justify-content: space-between;
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+}
+
+.summary-progress-bar {
+  height: 10px;
+  background: #dcfce7;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.summary-progress-bar div {
+  height: 100%;
+  background: #ef4444;
+}
+
+.last-updated {
+  margin-top: 14px;
+  color: #64748b;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .detail-main-grid {
+    grid-template-columns: 1fr;
+  }
+}
