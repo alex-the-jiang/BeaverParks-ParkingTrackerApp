@@ -11,6 +11,7 @@ function LotSummaryPanel({ selectedLot, spots }) {
   const latestUpdate = visibleSpots
     .map((spot) => spot.last_modified)
     .filter(Boolean)
+    .map((t) => t.endsWith("Z") ? t : t + "Z")
     .sort()
     .at(-1);
 
