@@ -352,6 +352,14 @@ select {
     grid-template-columns: 1fr;
   }
 
+  .sidebar-stack {
+    order: 2;
+  }
+
+  .lot-list {
+    order: 1;
+  }
+
   .stadium-shape {
     right: 40px;
     top: 70px;
@@ -411,4 +419,101 @@ select {
 
 .detail-search-item small {
   color: #64748b;
+}
+
+
+.sidebar-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.filter-header h2 {
+  margin: 0;
+}
+
+.clear-filters-button {
+  border: none;
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: #fff7ed;
+  color: #c2410c;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.clear-filters-button:hover {
+  background: #ffedd5;
+}
+
+.demo-instructions {
+  background: #f8fafc;
+  color: #111827;
+  border-radius: 18px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+}
+
+.demo-instructions h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 1.2rem;
+}
+
+.demo-instructions ol {
+  margin: 14px 0 0;
+  padding-left: 20px;
+  color: #64748b;
+}
+
+.demo-instructions li {
+  margin-bottom: 8px;
+}
+
+.lot-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.lot-status-badge {
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.lot-status-badge.plenty {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.lot-status-badge.limited {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+.lot-status-badge.almost-full {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.lot-status-badge.full {
+  background: #7f1d1d;
+  color: white;
+}
+
+.lot-card-footer {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-top: 10px;
 }
