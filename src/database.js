@@ -105,15 +105,12 @@ export async function getSectionData(sectionId) {
     return data;
 }
 
-export async function getAllSpots() {
-    const { data, error } = await supabase.from("spots")
-        .select("id, filled, last_modified, ada, section, position")
-        .order("position", { ascending: true });
+export async function updateSpot(id, newStatus) {
+    const { error } = await supabase.from("spots")
+        .update({ filled: newStatus, last_modified: new Date().toISOString() })
+        .eq("id", id);
 
     if (error) {
-        console.error(error);
-        return null;
+        console.log(error);
     }
-
-    return data;
 }
