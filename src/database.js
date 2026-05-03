@@ -96,3 +96,13 @@ export async function getSectionData(section) {
 
     return data;
 }
+
+export async function updateSpot(id, newStatus) {
+    const { error } = await supabase.from("spots")
+        .update({ filled: newStatus, last_modified: new Date().toISOString() })
+        .eq("id", id);
+
+    if (error) {
+        console.log(error);
+    }
+}
