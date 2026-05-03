@@ -111,7 +111,7 @@ function App() {
   const [typeFilter, setTypeFilter] = useState("all");
   const [locationFilter, setLocationFilter] = useState("all");
   const [capacityFilter, setCapacityFilter] = useState("all");
-  const [sortOption, setSortOption] = useState("most-open");
+  const [sortOption, setSortOption] = useState("highest-capacity");
   const [searchTerm, setSearchTerm] = useState("");
   const [sections, setSections] = useState([]);
 
@@ -147,6 +147,8 @@ function App() {
 
   const filteredLots = (locations ?? [])
     .filter((lot) => {
+      const totalSpots = lot.size ?? 0;
+
       const matchesType = typeFilter === "all" || lot.type === typeFilter;
 
       const matchesSearch =
@@ -158,27 +160,18 @@ function App() {
 
       const matchesCapacity =
         capacityFilter === "all" ||
-        (capacityFilter === "small" && lot.capacity < 50) ||
-        (capacityFilter === "medium" &&
-          lot.capacity >= 50 &&
-          lot.capacity <= 150) ||
-        (capacityFilter === "large" && lot.capacity > 150);
+        (capacityFilter === "small" && totalSpots < 50) ||
+        (capacityFilter === "medium" && totalSpots >= 50 && totalSpots <= 150) ||
+        (capacityFilter === "large" && totalSpots > 150);
 
       return matchesType && matchesSearch && matchesLocation && matchesCapacity;
     })
     .sort((a, b) => {
-      if (sortOption === "most-open") {
-        return b.openSpots - a.openSpots;
-      }
-
-      if (sortOption === "least-full") {
-        const aPercentFull = (a.capacity - a.openSpots) / a.capacity;
-        const bPercentFull = (b.capacity - b.openSpots) / b.capacity;
-        return aPercentFull - bPercentFull;
-      }
+      const aSize = a.size ?? 0;
+      const bSize = b.size ?? 0;
 
       if (sortOption === "highest-capacity") {
-        return b.capacity - a.capacity;
+        return bSize - aSize;
       }
 
       if (sortOption === "az") {
@@ -192,7 +185,7 @@ function App() {
     setTypeFilter("all");
     setLocationFilter("all");
     setCapacityFilter("all");
-    setSortOption("most-open");
+    setSortOption("highest-capacity");
     setSearchTerm("");
   }
 
@@ -289,7 +282,7 @@ function App() {
           />
         </section>
       )}
-      <Footer/>
+      <Footer />
     </main>
   );
 }

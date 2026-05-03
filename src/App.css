@@ -252,6 +252,11 @@ select {
   align-items: flex-start;
 }
 
+.lot-status-badge.unknown {
+  background: #e5e7eb;
+  color: #374151;
+}
+
 .lot-status-badge {
   border-radius: 999px;
   padding: 7px 10px;
