@@ -9,10 +9,7 @@ function SpotGrid({ spots, selectedLocationName = "Selected Lot", onSpotClick })
       <div className="spot-header">
         <div>
           <h2>{selectedLocationName}</h2>
-          <p>
-            {availableCount} available · {takenCount} taken · {spots.length}{" "}
-            total
-          </p>
+          <p>Click a spot to mark it as available or taken.</p>
         </div>
       </div>
 
