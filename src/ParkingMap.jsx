@@ -39,7 +39,8 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonC
                 positions={section.pos}
                 color="red"
                 eventHandlers={{
-                    click: () => { 
+                    click: () => {
+
                         setPopup(
                             (
                                 <Popup
@@ -49,7 +50,6 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonC
                                 autoClose={true}
                                 eventHandlers={{
                                     remove: () => {
-                                        setSelectedSection(null)
                                         setPopup(null)
                                     }
                                 }}
@@ -66,7 +66,7 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonC
                                         onClick={() => onSpotClick(spot)}
                                         className={spot.filled ? "taken" : "available"}
                                         >
-                                        {spot.spot_num}
+                                        {spot.position}
                                         </button>
                                     )
                                 )}
@@ -74,7 +74,7 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonC
                                 </div>
                                 </Popup>
                             )
-                        )
+                        ); 
                     }
                 }}
                 >
