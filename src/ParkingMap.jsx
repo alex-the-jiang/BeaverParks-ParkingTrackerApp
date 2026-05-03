@@ -83,11 +83,6 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonC
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         { mapTiles }
-        {/* <Marker position={[44.558352, -123.282418]}>
-            <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-            </Popup>
-        </Marker> */}
         
         <UpdateMap selectedLot={selectedLot} />
         </MapContainer>
