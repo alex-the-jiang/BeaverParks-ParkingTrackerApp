@@ -191,6 +191,8 @@ function App() {
   }
 
   function handleSpotClick(clickedSpot) {
+    Database.updateSpot(clickedSpot.id, !clickedSpot.filled);
+
     setSpots((currentSpots) =>
       currentSpots.map((spot) =>
         spot.id === clickedSpot.id

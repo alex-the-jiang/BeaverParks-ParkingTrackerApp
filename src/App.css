@@ -17,6 +17,8 @@ select {
 
 .app-shell {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -64,7 +66,7 @@ select {
 }
 
 .app-footer {
-  margin-top: 40px;
+  margin-top: auto;
   padding: 20px;
   text-align: center;
   background-color: #f97316;
@@ -333,13 +335,19 @@ select {
 
 .capacity-bar {
   height: 9px;
-  background: #dcfce7;
   border-radius: 999px;
   overflow: hidden;
   margin-top: 14px;
+  display: flex;
+  background: #fee2e2;
 }
 
-.capacity-bar div {
+.capacity-open {
+  height: 100%;
+  background: #22c55e;
+}
+
+.capacity-filled {
   height: 100%;
   background: #ef4444;
 }
@@ -537,12 +545,18 @@ select {
 
 .summary-progress-bar {
   height: 10px;
-  background: #dcfce7;
   border-radius: 999px;
   overflow: hidden;
+  display: flex;
+  background: #fee2e2;
 }
 
-.summary-progress-bar div {
+.summary-progress-open {
+  height: 100%;
+  background: #22c55e;
+}
+
+.summary-progress-filled {
   height: 100%;
   background: #ef4444;
 }
