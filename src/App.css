@@ -17,6 +17,8 @@ select {
 
 .app-shell {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 
@@ -64,7 +66,7 @@ select {
 }
 
 .app-footer {
-  margin-top: 40px;
+  margin-top: auto;
   padding: 20px;
   text-align: center;
   background-color: #f97316;
