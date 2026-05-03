@@ -113,6 +113,7 @@ function App() {
   const [capacityFilter, setCapacityFilter] = useState("all");
   const [sortOption, setSortOption] = useState("most-open");
   const [searchTerm, setSearchTerm] = useState("");
+  const [sections, setSections] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -130,6 +131,16 @@ function App() {
       if (spots) {
         setSpots(spots);
       }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+        const sections = await Database.getAllSections();
+        if (sections) {
+        setSections(sections);
+        }
     }
     fetchData();
   }, []);
@@ -199,6 +210,11 @@ function App() {
     );
   }
 
+  const selectedLotSections = sections
+    .filter(section => section.location === selectedLot?.id)
+    .map(section => section.id);
+  const selectedLotSpots = spots.filter(spot => selectedLotSections.includes(spot.section));
+
   return (
     <main className="app-shell">
       <Header searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
@@ -259,7 +275,7 @@ function App() {
           )}
 
           <div className="detail-main-grid">
-            <LotSummaryPanel selectedLot={selectedLot} spots={spots} />
+            <LotSummaryPanel selectedLot={selectedLot} spots={selectedLotSpots} />
 
             <div className="map-panel">
               <ParkingMap spots={spots} onSpotClick={handleSpotClick} selectedLot={selectedLot} />
