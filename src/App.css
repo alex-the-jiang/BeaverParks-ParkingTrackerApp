@@ -64,6 +64,19 @@ select {
   color: #555;
 }
 
+.app-footer {
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+  background-color: #f97316;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.about {
+  text-align: left;
+}
+
 .search-input {
   width: min(420px, 100%);
   padding: 14px 18px;

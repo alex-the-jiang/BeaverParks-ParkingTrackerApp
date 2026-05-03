@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import FilterPanel from "./components/FilterPanel";
 import LotList from "./components/LotList";
 import SpotGrid from "./components/SpotGrid";
@@ -262,6 +263,7 @@ function App() {
           />
         </section>
       )}
+      <Footer/>
     </main>
   );
 }
