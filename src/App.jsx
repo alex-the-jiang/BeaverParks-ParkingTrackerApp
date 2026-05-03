@@ -2,7 +2,6 @@ import { useState } from "react";
 import Header from "./components/Header";
 import FilterPanel from "./components/FilterPanel";
 import LotList from "./components/LotList";
-import MapPlaceholder from "./components/MapPlaceholder";
 import SpotGrid from "./components/SpotGrid";
 import "./App.css";
 import ParkingMap from "./ParkingMap.jsx";
@@ -121,10 +120,10 @@ function App() {
       currentSpots.map((spot) =>
         spot.id === clickedSpot.id
           ? {
-              ...spot,
-              filled: !spot.filled,
-              last_modified: new Date().toISOString(),
-            }
+            ...spot,
+            filled: !spot.filled,
+            last_modified: new Date().toISOString(),
+          }
           : spot
       )
     );
@@ -145,6 +144,35 @@ function App() {
           <button className="back-button" onClick={() => setSelectedLot(null)}>
             ← Back to lots
           </button>
+
+          {searchTerm && (
+            <section className="detail-search-results">
+              <h2>Search Results</h2>
+
+              {filteredLots.length === 0 ? (
+                <p>No parking lots match your search.</p>
+              ) : (
+                <div className="detail-search-list">
+                  {filteredLots.map((lot) => (
+                    <button
+                      key={lot.id}
+                      className={`detail-search-item ${selectedLot.id === lot.id ? "active" : ""
+                        }`}
+                      onClick={() => {
+                        setSelectedLot(lot);
+                        setSearchTerm("");
+                      }}
+                    >
+                      <span>{lot.name}</span>
+                      <small>
+                        {lot.type} Lot · {lot.location}
+                      </small>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </section>
+          )}
 
           <ParkingMap spots={spots} onSpotClick={handleSpotClick} />
 
