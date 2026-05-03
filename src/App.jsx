@@ -106,14 +106,26 @@ function App() {
   const [spots, setSpots] = useState(initialSpots);
   const [typeFilter, setTypeFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
+  const [locationFilter, setLocationFilter] = useState("all");
+  const [capacityFilter, setCapacityFilter] = useState("all");
 
   const filteredLots = mockLots.filter((lot) => {
     const matchesType = typeFilter === "all" || lot.type === typeFilter;
+
     const matchesSearch =
       lot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lot.location.toLowerCase().includes(searchTerm.toLowerCase());
 
-    return matchesType && matchesSearch;
+    const matchesLocation =
+      locationFilter === "all" || lot.location === locationFilter;
+
+    const matchesCapacity =
+      capacityFilter === "all" ||
+      (capacityFilter === "small" && lot.capacity < 50) ||
+      (capacityFilter === "medium" && lot.capacity >= 50 && lot.capacity <= 150) ||
+      (capacityFilter === "large" && lot.capacity > 150);
+
+    return matchesType && matchesSearch && matchesLocation && matchesCapacity;
   });
 
   function handleSpotClick(clickedSpot) {
@@ -136,7 +148,14 @@ function App() {
 
       {!selectedLot ? (
         <section className="dashboard-layout">
-          <FilterPanel typeFilter={typeFilter} setTypeFilter={setTypeFilter} />
+          <FilterPanel
+            typeFilter={typeFilter}
+            setTypeFilter={setTypeFilter}
+            locationFilter={locationFilter}
+            setLocationFilter={setLocationFilter}
+            capacityFilter={capacityFilter}
+            setCapacityFilter={setCapacityFilter}
+          />
 
           <LotList lots={filteredLots} onSelectLot={setSelectedLot} />
         </section>
