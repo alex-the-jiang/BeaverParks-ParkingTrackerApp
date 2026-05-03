@@ -21,7 +21,7 @@ function getColor(section, sectionUsage) {
     if (ratio <= 0.50) {
         return "green";
     } else if (ratio <= 0.90) {
-        return "yellow";
+        return "orange";
     } else {
         return "red";
     }
