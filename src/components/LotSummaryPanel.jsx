@@ -28,7 +28,7 @@ function LotSummaryPanel({ selectedLot, spots }) {
           <p className="eyebrow">Current Lot</p>
           <h2>{selectedLot.name}</h2>
           <p className="lot-summary-subtitle">
-            {selectedLot.type} Lot · {selectedLot.location}
+            {selectedLot.type} Lot · {selectedLot.region}
           </p>
         </div>
 

@@ -1,3 +1,6 @@
+import { useState, useEffect } from 'react';
+import * as Database from '../database.js';
+
 function getLotStatus(percentFull) {
   if (percentFull >= 95) {
     return "Full";
@@ -15,8 +18,20 @@ function getLotStatus(percentFull) {
 }
 
 function LotCard({ lot, onSelectLot }) {
-    console.log(lot);
-  const filledSpots = lot.capacity - lot.openSpots;
+   const [filledSpots, setFilledSpots] = useState(0); 
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const lotData = await Database.getLocationUsage(lot.id);
+
+            if (lotData) {
+                setFilledSpots(lotData);
+            }
+        };
+
+        fetchData();
+    });
+
   const percentFull = Math.round((filledSpots / lot.size) * 100);
   const status = getLotStatus(percentFull);
   const statusClass = status.toLowerCase().replace(" ", "-");
@@ -27,7 +42,7 @@ function LotCard({ lot, onSelectLot }) {
         <div>
           <h2>{lot.name}</h2>
           <p>
-            {lot.type} Lot · {lot.location}
+            {lot.type} Lot · {lot.region}
           </p>
         </div>
 
@@ -35,7 +50,7 @@ function LotCard({ lot, onSelectLot }) {
       </div>
 
       <div className="lot-stats">
-        <strong>{lot.openSpots}</strong>
+        <strong>{lot.size - filledSpots}</strong>
         <span>of {lot.size} open</span>
       </div>
 
