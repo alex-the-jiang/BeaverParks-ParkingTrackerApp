@@ -31,49 +31,55 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonC
         fetchData();
     }, []);
 
+    useEffect(() => {
+        setSelectedSection(null);
+    }, [selectedLot]);
+
     let mapTiles = undefined;
     if (!loadingData) {
         mapTiles =
-            sections.map((section) => (
-               <Polygon
-                positions={section.pos}
-                color="red"
-                eventHandlers={{
-                    click: () => setSelectedSection(section)
-                }}
-                >
-                {selectedSection?.id === section.id && (
-                    <Popup
-                    position={section.pos[0]}
-                    closeButton={true}
-                    closeOnClick={false}
-                    autoClose={true}
+            sections
+                .filter(section => section.location === selectedLot?.id)
+                .map((section) => (
+                <Polygon
+                    positions={section.pos}
+                    color="red"
                     eventHandlers={{
-                        remove: () => setSelectedSection(null)
+                        click: () => setSelectedSection(section)
                     }}
                     >
-                    <div>
-                        <h3>{section.name || "Parking Lot"}</h3>
-                        <h4>{section.key || "Red = Taken, Green = Available"}</h4>
+                    {selectedSection?.id === section.id && (
+                        <Popup
+                        position={section.pos[0]}
+                        closeButton={true}
+                        closeOnClick={false}
+                        autoClose={true}
+                        eventHandlers={{
+                            remove: () => setSelectedSection(null)
+                        }}
+                        >
+                        <div>
+                            <h3>{section.name || "Parking Lot"}</h3>
+                            <h4>{section.key || "Red = Taken, Green = Available"}</h4>
 
-                        <div className="spot-grid-popup">
-                        {spots.filter(spot => spot.section === selectedSection.id).map((spot) =>
-                            (
-                                <button
-                                key={spot.id}
-                                onClick={() => onSpotClick(spot)}
-                                className={spot.filled ? "taken" : "available"}
-                                >
-                                {spot.position+1}
-                                </button>
-                            )
-                        )}
+                            <div className="spot-grid-popup">
+                            {spots.filter(spot => spot.section === selectedSection.id).map((spot) =>
+                                (
+                                    <button
+                                    key={spot.id}
+                                    onClick={() => onSpotClick(spot)}
+                                    className={spot.filled ? "taken" : "available"}
+                                    >
+                                    {spot.position+1}
+                                    </button>
+                                )
+                            )}
+                            </div>
                         </div>
-                    </div>
-                    </Popup>
-                )}
-                </Polygon>
-            ))
+                        </Popup>
+                    )}
+                    </Polygon>
+                ))
     }
 
     return (
