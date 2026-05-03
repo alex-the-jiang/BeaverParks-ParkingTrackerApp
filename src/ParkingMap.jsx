@@ -13,9 +13,10 @@ function UpdateMap({ selectedLot }) {
     return null;
 }
 
-export default function ParkingMap({ spots, onSpotClick, selectedLot }) {
+export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonClick}) {
     const [loadingData, setLoadingData] = useState(true);
     const [sections, setSections] = useState(null);
+    const [selectedSection, setSelectedSection] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -34,10 +35,42 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot }) {
     if (!loadingData) {
         mapTiles =
             sections.map((section) => (
-                <Polygon
+               <Polygon
                 positions={section.pos}
                 color="red"
-                />
+                eventHandlers={{
+                    click: () => setSelectedSection(section)
+                }}
+                >
+                {selectedSection?.id === section.id && (
+                    <Popup
+                    position={section.pos[0]}
+                    closeButton={true}
+                    closeOnClick={false}
+                    autoClose={true}
+                    eventHandlers={{
+                        remove: () => setSelectedSection(null)
+                    }}
+                    >
+                    <div>
+                        <h3>{section.name || "Parking Lot"}</h3>
+                        <h4>{section.key || "Red = Taken, Green = Available"}</h4>
+
+                        <div className="spot-grid-popup">
+                        {spots.map((spot) => (
+                            <button
+                            key={spot.id}
+                            onClick={() => onSpotClick(spot)}
+                            className={spot.filled ? "taken" : "available"}
+                            >
+                            {spot.spot_num}
+                            </button>
+                        ))}
+                        </div>
+                    </div>
+                    </Popup>
+                )}
+                </Polygon>
             ))
     }
 

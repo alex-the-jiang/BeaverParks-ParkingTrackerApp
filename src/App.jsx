@@ -114,6 +114,7 @@ function App() {
   const [sortOption, setSortOption] = useState("highest-capacity");
   const [searchTerm, setSearchTerm] = useState("");
   const [sections, setSections] = useState([]);
+  const [showSpotGrid, setShowSpotGrid] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -271,15 +272,21 @@ function App() {
             <LotSummaryPanel selectedLot={selectedLot} spots={selectedLotSpots} />
 
             <div className="map-panel">
-              <ParkingMap spots={spots} onSpotClick={handleSpotClick} selectedLot={selectedLot} />
+              <ParkingMap 
+                spots={spots} 
+                onSpotClick={handleSpotClick} 
+                selectedLot={selectedLot} 
+                onPolygonClick={() => setShowSpotGrid(true)}
+              />
             </div>
           </div>
-
+          {/* {showSpotGrid && (
           <SpotGrid
             spots={spots}
             selectedLocationName={selectedLot.name}
             onSpotClick={handleSpotClick}
           />
+          )} */}
         </section>
       )}
       <Footer />
