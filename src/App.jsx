@@ -5,6 +5,7 @@ import LotList from "./components/LotList";
 import SpotGrid from "./components/SpotGrid";
 import "./App.css";
 import ParkingMap from "./ParkingMap.jsx";
+import LotSummaryPanel from "./components/LotSummaryPanel";
 
 const mockLots = [
   {
@@ -174,7 +175,13 @@ function App() {
             </section>
           )}
 
-          <ParkingMap spots={spots} onSpotClick={handleSpotClick} />
+          <div className="detail-main-grid">
+            <LotSummaryPanel selectedLot={selectedLot} spots={spots} />
+
+            <div className="map-panel">
+              <ParkingMap spots={spots} onSpotClick={handleSpotClick} />
+            </div>
+          </div>
 
           <SpotGrid
             spots={spots}
