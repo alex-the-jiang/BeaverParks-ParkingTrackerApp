@@ -16,7 +16,7 @@ function UpdateMap({ selectedLot }) {
 export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonClick}) {
     const [loadingData, setLoadingData] = useState(true);
     const [sections, setSections] = useState(null);
-    const [popup, setPopup] = useState(null);
+    const [selectedSection, setSelectedSection] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -39,45 +39,39 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonC
                 positions={section.pos}
                 color="red"
                 eventHandlers={{
-                    click: () => { 
-                        setPopup(
-                            (
-                                <Popup
-                                position={section.pos[0]}
-                                closeButton={true}
-                                closeOnClick={false}
-                                autoClose={true}
-                                eventHandlers={{
-                                    remove: () => {
-                                        setSelectedSection(null)
-                                        setPopup(null)
-                                    }
-                                }}
-                                >
-                                <div>
-                                <h3>{section.name || "Parking Lot"}</h3>
-                                <h4>{section.key || "Red = Taken, Green = Available"}</h4>
-
-                                <div className="spot-grid-popup">
-                                {spots.filter(spot => spot.section === section.id).map((spot) =>
-                                    (
-                                        <button
-                                        key={spot.id}
-                                        onClick={() => onSpotClick(spot)}
-                                        className={spot.filled ? "taken" : "available"}
-                                        >
-                                        {spot.position+1}
-                                        </button>
-                                    )
-                                )}
-                                </div>
-                                </div>
-                                </Popup>
-                            )
-                        )
-                    }
+                    click: () => setSelectedSection(section)
                 }}
                 >
+                {selectedSection?.id === section.id && (
+                    <Popup
+                    position={section.pos[0]}
+                    closeButton={true}
+                    closeOnClick={false}
+                    autoClose={true}
+                    eventHandlers={{
+                        remove: () => setSelectedSection(null)
+                    }}
+                    >
+                    <div>
+                        <h3>{section.name || "Parking Lot"}</h3>
+                        <h4>{section.key || "Red = Taken, Green = Available"}</h4>
+
+                        <div className="spot-grid-popup">
+                        {spots.filter(spot => spot.section === selectedSection.id).map((spot) =>
+                            (
+                                <button
+                                key={spot.id}
+                                onClick={() => onSpotClick(spot)}
+                                className={spot.filled ? "taken" : "available"}
+                                >
+                                {spot.position+1}
+                                </button>
+                            )
+                        )}
+                        </div>
+                    </div>
+                    </Popup>
+                )}
                 </Polygon>
             ))
     }
@@ -89,7 +83,6 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonC
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         { mapTiles }
-        { popup }
         {/* <Marker position={[44.558352, -123.282418]}>
             <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
