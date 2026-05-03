@@ -5,6 +5,7 @@ import LotList from "./components/LotList";
 import SpotGrid from "./components/SpotGrid";
 import "./App.css";
 import ParkingMap from "./ParkingMap.jsx";
+import DemoInstructions from "./components/DemoInstructions";
 import LotSummaryPanel from "./components/LotSummaryPanel";
 
 const mockLots = [
@@ -105,28 +106,61 @@ function App() {
   const [selectedLot, setSelectedLot] = useState(null);
   const [spots, setSpots] = useState(initialSpots);
   const [typeFilter, setTypeFilter] = useState("all");
-  const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("all");
   const [capacityFilter, setCapacityFilter] = useState("all");
+  const [sortOption, setSortOption] = useState("most-open");
+  const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredLots = mockLots.filter((lot) => {
-    const matchesType = typeFilter === "all" || lot.type === typeFilter;
+  const filteredLots = mockLots
+    .filter((lot) => {
+      const matchesType = typeFilter === "all" || lot.type === typeFilter;
 
-    const matchesSearch =
-      lot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lot.location.toLowerCase().includes(searchTerm.toLowerCase());
+      const matchesSearch =
+        lot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        lot.location.toLowerCase().includes(searchTerm.toLowerCase());
 
-    const matchesLocation =
-      locationFilter === "all" || lot.location === locationFilter;
+      const matchesLocation =
+        locationFilter === "all" || lot.location === locationFilter;
 
-    const matchesCapacity =
-      capacityFilter === "all" ||
-      (capacityFilter === "small" && lot.capacity < 50) ||
-      (capacityFilter === "medium" && lot.capacity >= 50 && lot.capacity <= 150) ||
-      (capacityFilter === "large" && lot.capacity > 150);
+      const matchesCapacity =
+        capacityFilter === "all" ||
+        (capacityFilter === "small" && lot.capacity < 50) ||
+        (capacityFilter === "medium" &&
+          lot.capacity >= 50 &&
+          lot.capacity <= 150) ||
+        (capacityFilter === "large" && lot.capacity > 150);
 
-    return matchesType && matchesSearch && matchesLocation && matchesCapacity;
-  });
+      return matchesType && matchesSearch && matchesLocation && matchesCapacity;
+    })
+    .sort((a, b) => {
+      if (sortOption === "most-open") {
+        return b.openSpots - a.openSpots;
+      }
+
+      if (sortOption === "least-full") {
+        const aPercentFull = (a.capacity - a.openSpots) / a.capacity;
+        const bPercentFull = (b.capacity - b.openSpots) / b.capacity;
+        return aPercentFull - bPercentFull;
+      }
+
+      if (sortOption === "highest-capacity") {
+        return b.capacity - a.capacity;
+      }
+
+      if (sortOption === "az") {
+        return a.name.localeCompare(b.name);
+      }
+
+      return 0;
+    });
+
+  function handleClearFilters() {
+    setTypeFilter("all");
+    setLocationFilter("all");
+    setCapacityFilter("all");
+    setSortOption("most-open");
+    setSearchTerm("");
+  }
 
   function handleSpotClick(clickedSpot) {
     setSpots((currentSpots) =>
@@ -148,14 +182,21 @@ function App() {
 
       {!selectedLot ? (
         <section className="dashboard-layout">
-          <FilterPanel
-            typeFilter={typeFilter}
-            setTypeFilter={setTypeFilter}
-            locationFilter={locationFilter}
-            setLocationFilter={setLocationFilter}
-            capacityFilter={capacityFilter}
-            setCapacityFilter={setCapacityFilter}
-          />
+          <div className="sidebar-stack">
+            <FilterPanel
+              typeFilter={typeFilter}
+              setTypeFilter={setTypeFilter}
+              locationFilter={locationFilter}
+              setLocationFilter={setLocationFilter}
+              capacityFilter={capacityFilter}
+              setCapacityFilter={setCapacityFilter}
+              sortOption={sortOption}
+              setSortOption={setSortOption}
+              onClearFilters={handleClearFilters}
+            />
+
+            <DemoInstructions />
+          </div>
 
           <LotList lots={filteredLots} onSelectLot={setSelectedLot} />
         </section>
