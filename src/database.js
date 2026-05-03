@@ -4,7 +4,7 @@ const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env
 
 export async function getLocationList() {
     const { data: locData, error: locErr } = await supabase.from("locations")
-        .select("id, name, type, pos");
+        .select("id, name, type, pos, region");
 
     if (locErr) {
         console.error(locErr);
@@ -31,9 +31,11 @@ export async function getLocationList() {
         }
 
         totalData[i] = {
+            id: locData[i].id,
             name: locData[i].name,
             type: locData[i].type,
             pos: locData[i].pos,
+            region: locData[i].region,
             size: size,
         };
     }

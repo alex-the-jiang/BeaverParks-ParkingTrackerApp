@@ -130,10 +130,10 @@ function App() {
 
       const matchesSearch =
         lot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        lot.location?.toLowerCase().includes(searchTerm.toLowerCase());
+        lot.region?.toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesLocation =
-        locationFilter === "all" || lot.location === locationFilter;
+        locationFilter === "all" || lot.region === locationFilter;
 
       const matchesCapacity =
         capacityFilter === "all" ||
@@ -239,7 +239,7 @@ function App() {
                     >
                       <span>{lot.name}</span>
                       <small>
-                        {lot.type} Lot · {lot.location}
+                        {lot.type} Lot · {lot.region}
                       </small>
                     </button>
                   ))}
