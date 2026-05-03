@@ -57,15 +57,17 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonC
                         <h4>{section.key || "Red = Taken, Green = Available"}</h4>
 
                         <div className="spot-grid-popup">
-                        {spots.map((spot) => (
-                            <button
-                            key={spot.id}
-                            onClick={() => onSpotClick(spot)}
-                            className={spot.filled ? "taken" : "available"}
-                            >
-                            {spot.spot_num}
-                            </button>
-                        ))}
+                        {spots.filter(spot => spot.section === selectedSection.id).map((spot) =>
+                            (
+                                <button
+                                key={spot.id}
+                                onClick={() => onSpotClick(spot)}
+                                className={spot.filled ? "taken" : "available"}
+                                >
+                                {spot.spot_num}
+                                </button>
+                            )
+                        )}
                         </div>
                     </div>
                     </Popup>
