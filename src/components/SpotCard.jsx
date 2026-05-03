@@ -6,7 +6,7 @@ function SpotCard({ spot, onClick }) {
       className={`spot-card ${isFilled ? "taken" : "available"}`}
       onClick={() => onClick?.(spot)}
     >
-      <span className="spot-number">Spot {spot.spot_num}</span>
+      <span className="spot-number">Spot {spot.position}</span>
       <span className="spot-status">{isFilled ? "Taken" : "Available"}</span>
     </button>
   );
