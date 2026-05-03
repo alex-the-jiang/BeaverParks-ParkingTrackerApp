@@ -19,7 +19,6 @@ select {
   min-height: 100vh;
 }
 
-/* Header / Logo */
 
 /* Header / Logo */
 
@@ -89,6 +88,31 @@ select {
 
 .search-input::placeholder {
   color: #9ca3af;
+}
+
+/* SpotGrid Leaflet Map Overlay Popup */
+.spot-grid-popup {
+  display: grid;
+  grid-template-columns: repeat(4, 40px);
+  gap: 6px;
+}
+
+.spot-grid-popup button {
+  width: 40px;
+  height: 30px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.spot-grid-popup .taken {
+  background: #b42318;
+  color: white;
+}
+
+.spot-grid-popup .available {
+  background: #15803d;
+  color: white;
 }
 
 /* Dashboard layout */

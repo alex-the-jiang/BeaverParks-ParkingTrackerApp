@@ -261,13 +261,13 @@ function App() {
               />
             </div>
           </div>
-          {showSpotGrid && (
+          {/* {showSpotGrid && (
           <SpotGrid
             spots={spots}
             selectedLocationName={selectedLot.name}
             onSpotClick={handleSpotClick}
           />
-          )}
+          )} */}
         </section>
       )}
       <Footer/>
