@@ -19,23 +19,62 @@ select {
   min-height: 100vh;
 }
 
+/* Header / Logo */
+
+/* Header / Logo */
+
 .app-header {
-  padding: 28px 36px;
+  padding: 22px 36px;
   background: #111827;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 24px;
 }
 
 .app-header h1 {
-  margin: 0;
-  font-size: 42px;
+  margin: 0px;
+  font-size: 60px;
 }
 
 .app-header p {
   margin: 8px 0 0;
   color: #9ca3af;
+}
+
+.left-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.logo-img {
+  height: 75px;
+  width: auto;
+}
+
+.tagline {
+  margin-top: 2px;
+  font-size: 20px;
+  color: #555;
+}
+
+.app-footer {
+  margin-top: 40px;
+  padding: 20px;
+  text-align: center;
+  background-color: #f97316;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.about {
+  text-align: left;
 }
 
 .search-input {
@@ -52,6 +91,8 @@ select {
   color: #9ca3af;
 }
 
+/* Dashboard layout */
+
 .dashboard-layout {
   display: grid;
   grid-template-columns: 240px 1fr;
@@ -59,12 +100,31 @@ select {
   padding: 28px 36px;
 }
 
+.sidebar-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Filters */
+
 .filter-panel {
   background: #f8fafc;
   color: #111827;
   border-radius: 18px;
   padding: 20px;
   height: fit-content;
+}
+
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.filter-header h2 {
+  margin: 0;
 }
 
 .filter-panel h2 {
@@ -90,6 +150,48 @@ select {
   color: #6b7280;
   background: #f3f4f6;
 }
+
+.clear-filters-button {
+  border: none;
+  border-radius: 999px;
+  padding: 7px 12px;
+  background: #fff7ed;
+  color: #c2410c;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.clear-filters-button:hover {
+  background: #ffedd5;
+}
+
+/* Demo instructions */
+
+.demo-instructions {
+  background: #f8fafc;
+  color: #111827;
+  border-radius: 18px;
+  padding: 20px;
+  border: 1px solid #e5e7eb;
+}
+
+.demo-instructions h2 {
+  margin: 0;
+  color: #111827;
+  font-size: 1.2rem;
+}
+
+.demo-instructions ol {
+  margin: 14px 0 0;
+  padding-left: 20px;
+  color: #64748b;
+}
+
+.demo-instructions li {
+  margin-bottom: 8px;
+}
+
+/* Lot list */
 
 .lot-list {
   background: #f8fafc;
@@ -143,6 +245,41 @@ select {
   color: #64748b;
 }
 
+.lot-card-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.lot-status-badge {
+  border-radius: 999px;
+  padding: 7px 10px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.lot-status-badge.plenty {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.lot-status-badge.limited {
+  background: #ffedd5;
+  color: #9a3412;
+}
+
+.lot-status-badge.almost-full {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.lot-status-badge.full {
+  background: #7f1d1d;
+  color: white;
+}
+
 .lot-stats {
   margin-top: 16px;
   display: flex;
@@ -159,6 +296,12 @@ select {
   color: #64748b;
 }
 
+.lot-card-footer {
+  color: #64748b;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
 .capacity-bar {
   height: 9px;
   background: #dcfce7;
@@ -171,6 +314,8 @@ select {
   height: 100%;
   background: #ef4444;
 }
+
+/* Detail page */
 
 .detail-layout {
   padding: 28px 36px;
@@ -189,185 +334,6 @@ select {
 
 .back-button:hover {
   opacity: 0.9;
-}
-
-.map-placeholder {
-  background: #f8fafc;
-  border-radius: 18px;
-  padding: 24px;
-  color: #111827;
-  margin-bottom: 24px;
-}
-
-.map-box {
-  position: relative;
-  height: 360px;
-  border-radius: 16px;
-  background:
-    linear-gradient(90deg, rgba(148, 163, 184, 0.15) 1px, transparent 1px),
-    linear-gradient(rgba(148, 163, 184, 0.15) 1px, transparent 1px),
-    #e5e7eb;
-  background-size: 28px 28px;
-  overflow: hidden;
-}
-
-.stadium-shape {
-  position: absolute;
-  right: 120px;
-  top: 80px;
-  width: 160px;
-  height: 120px;
-  border-radius: 50%;
-  border: 4px solid #9ca3af;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #374151;
-  font-weight: 700;
-  text-align: center;
-}
-
-.fake-lot {
-  position: absolute;
-  left: 120px;
-  bottom: 70px;
-  display: grid;
-  grid-template-columns: repeat(4, 45px);
-  gap: 8px;
-  padding: 12px;
-  background: #374151;
-  border-radius: 12px;
-}
-
-.fake-spot {
-  width: 45px;
-  height: 32px;
-  border-radius: 6px;
-}
-
-.fake-spot.available {
-  background: #15803d;
-}
-
-.fake-spot.taken {
-  background: #b42318;
-}
-
-.map-popup {
-  position: absolute;
-  left: 110px;
-  bottom: 180px;
-  background: white;
-  border-radius: 12px;
-  padding: 12px 14px;
-  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.map-popup span {
-  color: #64748b;
-}
-
-/* Spot card section */
-
-.spot-section {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 1.5rem;
-  border-radius: 18px;
-  background: #f8fafc;
-  border: 1px solid #e5e7eb;
-}
-
-.spot-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-}
-
-.spot-header h2 {
-  color: #111827;
-  margin: 0;
-}
-
-.spot-header p {
-  margin: 6px 0 0;
-  color: #64748b;
-}
-
-.spot-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
-  gap: 12px;
-}
-
-.spot-card {
-  border: none;
-  border-radius: 14px;
-  min-height: 88px;
-  padding: 12px;
-  cursor: pointer;
-  color: white;
-  font-weight: 700;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 6px;
-  transition: transform 0.15s ease, opacity 0.15s ease;
-}
-
-.spot-card:hover {
-  transform: translateY(-3px);
-  opacity: 0.9;
-}
-
-.spot-card.available {
-  background: #15803d;
-}
-
-.spot-card.taken {
-  background: #b42318;
-}
-
-.spot-number {
-  font-size: 0.95rem;
-}
-
-.spot-status {
-  font-size: 0.8rem;
-  opacity: 0.95;
-}
-
-@media (max-width: 800px) {
-  .app-header {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .dashboard-layout {
-    grid-template-columns: 1fr;
-  }
-
-  .sidebar-stack {
-    order: 2;
-  }
-
-  .lot-list {
-    order: 1;
-  }
-
-  .stadium-shape {
-    right: 40px;
-    top: 70px;
-  }
-
-  .fake-lot {
-    left: 40px;
-  }
 }
 
 .detail-search-results {
@@ -421,102 +387,8 @@ select {
   color: #64748b;
 }
 
+/* Detail page map + summary */
 
-.sidebar-stack {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
-
-.filter-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-}
-
-.filter-header h2 {
-  margin: 0;
-}
-
-.clear-filters-button {
-  border: none;
-  border-radius: 999px;
-  padding: 7px 12px;
-  background: #fff7ed;
-  color: #c2410c;
-  font-weight: 800;
-  cursor: pointer;
-}
-
-.clear-filters-button:hover {
-  background: #ffedd5;
-}
-
-.demo-instructions {
-  background: #f8fafc;
-  color: #111827;
-  border-radius: 18px;
-  padding: 20px;
-  border: 1px solid #e5e7eb;
-}
-
-.demo-instructions h2 {
-  margin: 0;
-  color: #111827;
-  font-size: 1.2rem;
-}
-
-.demo-instructions ol {
-  margin: 14px 0 0;
-  padding-left: 20px;
-  color: #64748b;
-}
-
-.demo-instructions li {
-  margin-bottom: 8px;
-}
-
-.lot-card-top {
-  display: flex;
-  justify-content: space-between;
-  gap: 14px;
-  align-items: flex-start;
-}
-
-.lot-status-badge {
-  border-radius: 999px;
-  padding: 7px 10px;
-  font-size: 0.75rem;
-  font-weight: 800;
-  white-space: nowrap;
-}
-
-.lot-status-badge.plenty {
-  background: #dcfce7;
-  color: #166534;
-}
-
-.lot-status-badge.limited {
-  background: #ffedd5;
-  color: #9a3412;
-}
-
-.lot-status-badge.almost-full {
-  background: #fee2e2;
-  color: #991b1b;
-}
-
-.lot-status-badge.full {
-  background: #7f1d1d;
-  color: white;
-}
-
-.lot-card-footer {
-  color: #64748b;
-  font-size: 0.9rem;
-  margin-top: 10px;
-}
 .detail-main-grid {
   display: grid;
   grid-template-columns: 320px 1fr;
@@ -652,8 +524,191 @@ select {
   font-size: 0.9rem;
 }
 
+/* Old map placeholder, safe to keep */
+
+.map-placeholder {
+  background: #f8fafc;
+  border-radius: 18px;
+  padding: 24px;
+  color: #111827;
+  margin-bottom: 24px;
+}
+
+.map-box {
+  position: relative;
+  height: 360px;
+  border-radius: 16px;
+  background:
+    linear-gradient(90deg, rgba(148, 163, 184, 0.15) 1px, transparent 1px),
+    linear-gradient(rgba(148, 163, 184, 0.15) 1px, transparent 1px),
+    #e5e7eb;
+  background-size: 28px 28px;
+  overflow: hidden;
+}
+
+.stadium-shape {
+  position: absolute;
+  right: 120px;
+  top: 80px;
+  width: 160px;
+  height: 120px;
+  border-radius: 50%;
+  border: 4px solid #9ca3af;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #374151;
+  font-weight: 700;
+  text-align: center;
+}
+
+.fake-lot {
+  position: absolute;
+  left: 120px;
+  bottom: 70px;
+  display: grid;
+  grid-template-columns: repeat(4, 45px);
+  gap: 8px;
+  padding: 12px;
+  background: #374151;
+  border-radius: 12px;
+}
+
+.fake-spot {
+  width: 45px;
+  height: 32px;
+  border-radius: 6px;
+}
+
+.fake-spot.available {
+  background: #15803d;
+}
+
+.fake-spot.taken {
+  background: #b42318;
+}
+
+.map-popup {
+  position: absolute;
+  left: 110px;
+  bottom: 180px;
+  background: white;
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.map-popup span {
+  color: #64748b;
+}
+
+/* Spot cards */
+
+.spot-section {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  border-radius: 18px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+}
+
+.spot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.spot-header h2 {
+  color: #111827;
+  margin: 0;
+}
+
+.spot-header p {
+  margin: 6px 0 0;
+  color: #64748b;
+}
+
+.spot-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(95px, 1fr));
+  gap: 12px;
+}
+
+.spot-card {
+  border: none;
+  border-radius: 14px;
+  min-height: 88px;
+  padding: 12px;
+  cursor: pointer;
+  color: white;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.15s ease, opacity 0.15s ease;
+}
+
+.spot-card:hover {
+  transform: translateY(-3px);
+  opacity: 0.9;
+}
+
+.spot-card.available {
+  background: #15803d;
+}
+
+.spot-card.taken {
+  background: #b42318;
+}
+
+.spot-number {
+  font-size: 0.95rem;
+}
+
+.spot-status {
+  font-size: 0.8rem;
+  opacity: 0.95;
+}
+
+/* Responsive */
+
 @media (max-width: 900px) {
   .detail-main-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 800px) {
+  .app-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dashboard-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar-stack {
+    order: 2;
+  }
+
+  .lot-list {
+    order: 1;
+  }
+
+  .stadium-shape {
+    right: 40px;
+    top: 70px;
+  }
+
+  .fake-lot {
+    left: 40px;
   }
 }

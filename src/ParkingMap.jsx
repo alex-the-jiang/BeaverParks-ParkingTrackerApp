@@ -1,9 +1,19 @@
 import { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polygon } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Polygon, useMap } from 'react-leaflet'
 import "leaflet/dist/leaflet.css";
 import * as Database from './database.js';
 
-export default function ParkingMap() {
+function UpdateMap({ selectedLot }) {
+    const map = useMap();
+
+    if (selectedLot?.pos) {
+        map.setView([selectedLot.pos.lat, selectedLot.pos.long], 18);
+    }
+
+    return null;
+}
+
+export default function ParkingMap({ spots, onSpotClick, selectedLot }) {
     const [loadingData, setLoadingData] = useState(true);
     const [sections, setSections] = useState(null);
 
@@ -43,6 +53,8 @@ export default function ParkingMap() {
             A pretty CSS3 popup. <br /> Easily customizable.
             </Popup>
         </Marker> */}
+        
+        <UpdateMap selectedLot={selectedLot} />
         </MapContainer>
     )
 }

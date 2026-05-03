@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import FilterPanel from "./components/FilterPanel";
 import LotList from "./components/LotList";
 import SpotGrid from "./components/SpotGrid";
@@ -7,6 +8,7 @@ import "./App.css";
 import ParkingMap from "./ParkingMap.jsx";
 import DemoInstructions from "./components/DemoInstructions";
 import LotSummaryPanel from "./components/LotSummaryPanel";
+import * as Database from "./database.js";
 
 const mockLots = [
   {
@@ -103,6 +105,7 @@ const initialSpots = [
 ];
 
 function App() {
+  const [locations, setLocations] = useState([]);
   const [selectedLot, setSelectedLot] = useState(null);
   const [spots, setSpots] = useState(initialSpots);
   const [typeFilter, setTypeFilter] = useState("all");
@@ -111,13 +114,23 @@ function App() {
   const [sortOption, setSortOption] = useState("most-open");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredLots = mockLots
+  useEffect(() => {
+    const fetchData = async () => {
+      const locations = await Database.getLocationList();
+      if (locations) {
+        setLocations(locations);
+      }
+    }
+    fetchData();
+  }, []);
+
+  const filteredLots = (locations ?? [])
     .filter((lot) => {
       const matchesType = typeFilter === "all" || lot.type === typeFilter;
 
       const matchesSearch =
         lot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        lot.location.toLowerCase().includes(searchTerm.toLowerCase());
+        lot.location?.toLowerCase().includes(searchTerm.toLowerCase());
 
       const matchesLocation =
         locationFilter === "all" || lot.location === locationFilter;
@@ -239,7 +252,7 @@ function App() {
             <LotSummaryPanel selectedLot={selectedLot} spots={spots} />
 
             <div className="map-panel">
-              <ParkingMap spots={spots} onSpotClick={handleSpotClick} />
+              <ParkingMap spots={spots} onSpotClick={handleSpotClick} selectedLot={selectedLot} />
             </div>
           </div>
 
@@ -250,6 +263,7 @@ function App() {
           />
         </section>
       )}
+      <Footer/>
     </main>
   );
 }
