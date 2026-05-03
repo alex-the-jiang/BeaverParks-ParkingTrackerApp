@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Rectangle } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, Polygon } from 'react-leaflet'
 import "leaflet/dist/leaflet.css";
 import * as Database from './database.js';
 
 export default function ParkingMap() {
     const [loadingData, setLoadingData] = useState(true);
-    const [spots, setSpots] = useState(null);
+    const [sections, setSections] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            const spots = await Database.getAllSpots();
+            const sectionData = await Database.getAllSections();
 
-            if (spots) {
-                setSpots(spots);
+            if (sectionData) {
+                setSections(sectionData);
                 setLoadingData(false);
             }
         }
@@ -20,12 +20,12 @@ export default function ParkingMap() {
         fetchData();
     }, []);
 
-    let mapData = undefined;
+    let mapTiles = undefined;
     if (!loadingData) {
-        mapData =
-            spots.map((spot) => (
-                <Rectangle
-                bounds={spot.positioning}
+        mapTiles =
+            sections.map((section) => (
+                <Polygon
+                positions={section.pos}
                 color="red"
                 />
             ))
@@ -37,7 +37,7 @@ export default function ParkingMap() {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        { mapData }
+        { mapTiles }
         {/* <Marker position={[44.558352, -123.282418]}>
             <Popup>
             A pretty CSS3 popup. <br /> Easily customizable.
