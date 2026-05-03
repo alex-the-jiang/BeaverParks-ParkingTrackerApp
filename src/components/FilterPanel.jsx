@@ -1,4 +1,11 @@
-function FilterPanel({ typeFilter, setTypeFilter }) {
+function FilterPanel({
+  typeFilter,
+  setTypeFilter,
+  locationFilter,
+  setLocationFilter,
+  capacityFilter,
+  setCapacityFilter,
+}) {
   return (
     <aside className="filter-panel">
       <h2>Filters</h2>
@@ -18,15 +25,26 @@ function FilterPanel({ typeFilter, setTypeFilter }) {
 
       <label>
         Location
-        <select disabled>
-          <option>Reser Stadium Area</option>
+        <select
+          value={locationFilter}
+          onChange={(event) => setLocationFilter(event.target.value)}
+        >
+          <option value="all">All Locations</option>
+          <option value="Reser Stadium">Reser Stadium</option>
+          <option value="LaSells Stewart Center">LaSells Stewart Center</option>
         </select>
       </label>
 
       <label>
         Capacity
-        <select disabled>
-          <option>Any Capacity</option>
+        <select
+          value={capacityFilter}
+          onChange={(event) => setCapacityFilter(event.target.value)}
+        >
+          <option value="all">Any Capacity</option>
+          <option value="small">Small: under 50</option>
+          <option value="medium">Medium: 50–150</option>
+          <option value="large">Large: 150+</option>
         </select>
       </label>
     </aside>
