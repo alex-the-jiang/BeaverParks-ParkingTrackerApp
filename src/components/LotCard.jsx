@@ -43,6 +43,7 @@ function LotCard({ lot, onSelectLot }) {
     const percentFull =
         totalSpots > 0 ? Math.round((filledSpots / totalSpots) * 100) : 0;
 
+    const percentOpen = totalSpots > 0 ? Math.round((availableSpots / totalSpots) * 100) : 0;
     const status = totalSpots > 0 ? getLotStatus(percentFull) : "Unknown";
     const statusClass = status.toLowerCase().replace(" ", "-");
 
@@ -64,11 +65,12 @@ function LotCard({ lot, onSelectLot }) {
                 <span>of {totalSpots} open</span>
             </div>
 
-            <div className="capacity-bar" aria-label={`${percentFull}% full`}>
-                <div style={{ width: `${percentFull}%` }}></div>
+            <div className="capacity-bar" aria-label={`${percentOpen}% open`}>
+                <div className="capacity-open" style={{ width: `${percentOpen}%` }}></div>
+                <div className="capacity-filled" style={{ width: `${percentFull}%` }}></div>
             </div>
 
-            <p className="lot-card-footer">{percentFull}% occupied</p>
+            <p className="lot-card-footer">{percentOpen}% available · {percentFull}% occupied</p>
         </button>
     );
 }
