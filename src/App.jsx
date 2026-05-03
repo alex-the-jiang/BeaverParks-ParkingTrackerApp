@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./components/Header";
 import FilterPanel from "./components/FilterPanel";
 import LotList from "./components/LotList";
@@ -6,6 +6,7 @@ import MapPlaceholder from "./components/MapPlaceholder";
 import SpotGrid from "./components/SpotGrid";
 import "./App.css";
 import ParkingMap from "./ParkingMap.jsx";
+import * as Database from "./database.js";
 
 const mockLots = [
   {
@@ -102,16 +103,26 @@ const initialSpots = [
 ];
 
 function App() {
+  const [locations, setLocations] = useState([]);
   const [selectedLot, setSelectedLot] = useState(null);
   const [spots, setSpots] = useState(initialSpots);
   const [typeFilter, setTypeFilter] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
-  const filteredLots = mockLots.filter((lot) => {
+  useEffect(() => {
+    const fetchData = async () => {
+      const locations = await Database.getLocationList();
+      if (locations) {
+        setLocations(locations);
+      }
+    }
+    fetchData();
+  }, []);
+
+  const filteredLots = (locations ?? []).filter((lot) => {
     const matchesType = typeFilter === "all" || lot.type === typeFilter;
     const matchesSearch =
-      lot.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      lot.location.toLowerCase().includes(searchTerm.toLowerCase());
+        lot.name.toLowerCase().includes(searchTerm.toLowerCase());
 
     return matchesType && matchesSearch;
   });
@@ -146,7 +157,7 @@ function App() {
             ← Back to lots
           </button>
 
-          <ParkingMap spots={spots} onSpotClick={handleSpotClick} />
+          <ParkingMap selectedLot={selectedLot} />
 
           <SpotGrid
             spots={spots}
