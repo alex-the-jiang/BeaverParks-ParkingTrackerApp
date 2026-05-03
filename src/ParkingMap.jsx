@@ -66,7 +66,7 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonC
                                         onClick={() => onSpotClick(spot)}
                                         className={spot.filled ? "taken" : "available"}
                                         >
-                                        {spot.spot_num}
+                                        {spot.position+1}
                                         </button>
                                     )
                                 )}
