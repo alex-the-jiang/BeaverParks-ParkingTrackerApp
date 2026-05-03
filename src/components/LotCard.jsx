@@ -15,8 +15,9 @@ function getLotStatus(percentFull) {
 }
 
 function LotCard({ lot, onSelectLot }) {
+    console.log(lot);
   const filledSpots = lot.capacity - lot.openSpots;
-  const percentFull = Math.round((filledSpots / lot.capacity) * 100);
+  const percentFull = Math.round((filledSpots / lot.size) * 100);
   const status = getLotStatus(percentFull);
   const statusClass = status.toLowerCase().replace(" ", "-");
 
@@ -35,7 +36,7 @@ function LotCard({ lot, onSelectLot }) {
 
       <div className="lot-stats">
         <strong>{lot.openSpots}</strong>
-        <span>of {lot.capacity} open</span>
+        <span>of {lot.size} open</span>
       </div>
 
       <div className="capacity-bar" aria-label={`${percentFull}% full`}>
