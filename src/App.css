@@ -20,22 +20,44 @@ select {
 }
 
 .app-header {
-  padding: 28px 36px;
+  padding: 22px 36px;
   background: #111827;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
   gap: 24px;
 }
 
 .app-header h1 {
-  margin: 0;
-  font-size: 42px;
+  margin: 0px;
+  font-size: 60px;
 }
 
 .app-header p {
   margin: 8px 0 0;
   color: #9ca3af;
+}
+
+.left-section {
+  display: flex;
+  flex-direction: column; /* stack logo row + tagline */
+}
+
+.logo-container {
+  display: flex;
+  align-items: flex-end; /* vertically aligns image with text */
+  gap: 12px;           /* space between text and image */
+}
+
+.logo-img {
+  height: 75px;
+  width: auto;
+}
+
+.tagline {
+  margin-top: 2px;
+  font-size: 20px;
+  color: #555;
 }
 
 .search-input {
