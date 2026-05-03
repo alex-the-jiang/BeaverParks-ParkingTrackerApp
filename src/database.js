@@ -13,29 +13,12 @@ export async function getLocationList() {
 
     let totalData = [];
     for (let i = 0; i < locData.length; i++) {
-        const { data: secData, error: secErr } = await supabase.from("sections")
-            .select("id")
-            .eq("location", locData[i].id);
+        const { data: size, error: secErr } = await supabase
+            .rpc("get_location_size", { loc: locData[i].id });
 
         if (secErr) {
-            console.error(secErr);
+            console.error(size, secErr);
             return null;
-        }
-
-        let size = 0;
-
-        for (let j = 0; j < secData.length; j++) {
-            const { count, error: spotCountErr } = await supabase
-                .from("spots")
-                .select("*", { count: "exact", head: true })
-                .eq("section", secData[j].id);
-
-            if (spotCountErr) {
-                console.error(spotCountErr);
-                return null;
-            }
-
-            size += count ?? 0;
         }
 
         totalData[i] = {
@@ -52,21 +35,15 @@ export async function getLocationList() {
 }
 
 export async function getLocationUsage(id) {
-    const { data: secData, error: secErr } = await supabase.from("sections")
-        .select("id")
-        .eq("location", id);
+    const { data, error } = await supabase
+        .rpc("get_location_usage", { loc: id }).single();
 
-    if (secErr) {
-        console.error(id, secErr);
+    if (error) {
+        console.error(error);
         return null;
     }
 
-    let total = 0;
-    for (let i = 0; i < secData.length; i++) {
-        total += await getSectionUsage(secData[i].id);
-    }
-
-    return total;
+    return data;
 }
 
 export async function getAllSections() {
