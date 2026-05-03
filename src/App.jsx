@@ -107,7 +107,7 @@ const initialSpots = [
 function App() {
   const [locations, setLocations] = useState([]);
   const [selectedLot, setSelectedLot] = useState(null);
-  const [spots, setSpots] = useState(initialSpots);
+  const [spots, setSpots] = useState([]);
   const [typeFilter, setTypeFilter] = useState("all");
   const [locationFilter, setLocationFilter] = useState("all");
   const [capacityFilter, setCapacityFilter] = useState("all");
@@ -119,6 +119,16 @@ function App() {
       const locations = await Database.getLocationList();
       if (locations) {
         setLocations(locations);
+      }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const spots = await Database.getAllSpots();
+      if (spots) {
+        setSpots(spots);
       }
     }
     fetchData();

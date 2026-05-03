@@ -82,8 +82,21 @@ export async function getSectionUsage(id) {
 
 export async function getSectionData(section) {
     const { data, error } = await supabase.from("spots")
-        .select("id, filled, last_modified, ada")
+        .select("id, filled, last_modified, ada, section")
         .eq("section", id)
+        .order("position", { ascending: true });
+
+    if (error) {
+        console.error(error);
+        return null;
+    }
+
+    return data;
+}
+
+export async function getAllSpots() {
+    const { data, error } = await supabase.from("spots")
+        .select("id, filled, last_modified, ada, section, position")
         .order("position", { ascending: true });
 
     if (error) {
