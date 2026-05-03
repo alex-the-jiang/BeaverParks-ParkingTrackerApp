@@ -4,7 +4,7 @@ const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env
 
 export async function getLocationList() {
     const { data, error } = await supabase.from("locations")
-        .select("name, type, pos, spots(count)");
+        .select("name, type, pos, sections(sports(count)).sum()");
 
     if (error) {
         console.error(error);
@@ -14,23 +14,23 @@ export async function getLocationList() {
     return data;
 }
 
-export async function getLocationUsage(id) {
-    const { count, error } = await supabase.from("spots")
-        .select("*", { count: 'exact', head: 'true' })
-        .eq("location", id)
-        .eq("filled", true);
+export async function getAllSections() {
+    const { data, error } = await supabase.from("sections")
+        .select("id, location, pos");
 
     if (error) {
         console.error(error);
         return null;
     }
 
-    return count;
+    return data;
 }
 
-export async function getAllSpots() {
+export async function getSectionData(section) {
     const { data, error } = await supabase.from("spots")
-        .select("id, filled, positioning");
+        .select("id, filled, last_modified, ada")
+        .eq("section", id)
+        .order("position", { ascending: true });
 
     if (error) {
         console.error(error);
@@ -38,33 +38,4 @@ export async function getAllSpots() {
     }
 
     return data;
-}
-
-export async function getSpotData(id) {
-    const { data: spotData, error: spotErr } = await supabase.from("spots")
-        .select("id, location, filled, last_modified, spot_num")
-        .eq("id", id)
-        .single();
-
-    if (spotErr) {
-        console.error(spotErr);
-        return null;
-    }
-
-    console.log(spotData);
-
-    const { data: locData, error: locErr } = await supabase.from("locations")
-        .select("name, type")
-        .eq("id", spotData.location)
-        .single();
-
-    if (locErr) {
-        console.error(locErr);
-        return null;
-    }
-
-    return {
-        spot: spotData,
-        location: locData,
-    }
 }
