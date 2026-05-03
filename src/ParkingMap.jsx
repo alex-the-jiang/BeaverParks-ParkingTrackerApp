@@ -13,17 +13,34 @@ function UpdateMap({ selectedLot }) {
     return null;
 }
 
+function getColor(section, sectionUsage) {
+    let usage = sectionUsage.find((uSec) => uSec.id == section.id).spots[0].count;
+    let size = section.spots[0].count;
+    let ratio = usage / size;
+
+    if (ratio <= 0.50) {
+        return "green";
+    } else if (ratio <= 0.90) {
+        return "yellow";
+    } else {
+        return "red";
+    }
+}
+
 export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonClick}) {
     const [loadingData, setLoadingData] = useState(true);
     const [sections, setSections] = useState(null);
     const [selectedSection, setSelectedSection] = useState(null);
+    const [sectionUsage, setSectionUsage] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             const sectionData = await Database.getAllSections();
+            const sectionUsageData = await Database.getSectionUsage();
 
-            if (sectionData) {
+            if (sectionData && sectionUsageData) {
                 setSections(sectionData);
+                setSectionUsage(sectionUsageData);
                 setLoadingData(false);
             }
         }
@@ -43,7 +60,7 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonC
                 .map((section) => (
                 <Polygon
                     positions={section.pos}
-                    color="red"
+                    color={getColor(section, sectionUsage)}
                     eventHandlers={{
                         click: () => setSelectedSection(section)
                     }}

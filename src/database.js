@@ -48,7 +48,7 @@ export async function getLocationUsage(id) {
 
 export async function getAllSections() {
     const { data, error } = await supabase.from("sections")
-        .select("id, location, pos");
+        .select("id, location, pos, spots(count)");
 
     if (error) {
         console.error(error);
@@ -58,13 +58,12 @@ export async function getAllSections() {
     return data;
 }
 
-export async function getSectionUsage(id) {
-    const { count } = await supabase.from("spots")
-        .select('*', { count: 'exact', head: true })
-        .eq("section", id)
-        .eq("filled", true);
+export async function getSectionUsage() {
+    const { data } = await supabase.from("sections")
+        .select("id, spots(count)")
+        .eq("spots.filled", true);
 
-    return count;
+    return data;
 }
 
 export async function getSectionData(sectionId) {
