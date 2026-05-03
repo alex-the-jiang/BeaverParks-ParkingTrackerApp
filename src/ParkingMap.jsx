@@ -13,7 +13,7 @@ function UpdateMap({ selectedLot }) {
     return null;
 }
 
-export default function ParkingMap({ spots, onSpotClick, selectedLot }) {
+export default function ParkingMap({ spots, onSpotClick, selectedLot, onPolygonClick}) {
     const [loadingData, setLoadingData] = useState(true);
     const [sections, setSections] = useState(null);
 
@@ -37,6 +37,11 @@ export default function ParkingMap({ spots, onSpotClick, selectedLot }) {
                 <Polygon
                 positions={section.pos}
                 color="red"
+                eventHandlers={{
+                    click: () => {
+                        onPolygonClick?.();
+                    }
+                }}
                 />
             ))
     }
